@@ -27,7 +27,32 @@ module.exports = (sequelize, DataTypes) => {
         status: {
             type: DataTypes.STRING,
             allowNull: false
+        },
+        projectId: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        },
+        creatorUserId: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        },
+        developerUserId: {
+            type: DataTypes.INTEGER
         }
     });
+
+    bug.associate = (models) => {
+        bug.belongsTo(models.user, {
+            as: 'creatorUser',
+            foreignKey: 'creatorUserId'
+        });
+        bug.belongsTo(models.user, {
+            as: 'developerUser',
+            foreignKey: 'developerUserId'
+        });
+        bug.belongsTo(models.project, {
+            foreignKey: 'projectId'
+        })
+    }
     return bug;
 }
