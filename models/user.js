@@ -29,5 +29,19 @@ module.exports = (sequelize, DataTypes) => {
             }
         }
     });
+
+    user.associate = (models) => {
+        user.belongsToMany(models.project, {
+            through: 'user_project'
+        });
+        user.hasMany(models.bug, {
+            as: 'creatorUser',
+            foreignKey: 'creatorUserId'
+        });
+        user.hasMany(models.bug, {
+            as: 'developerUser',
+            foreignKey: 'developerUserId'
+        });
+    }
     return user;
 }

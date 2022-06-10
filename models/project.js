@@ -15,5 +15,13 @@ module.exports = (sequelize, DataTypes) => {
             }
         }
     });
+    
+    project.associate = (models) => {
+        project.hasMany(models.bug, { foreignKey: 'bugId' });
+        project.belongsToMany(models.user, { 
+            through: 'user_project',
+            onDelete: 'CASCADE'
+        })
+    };
     return project;
 }
